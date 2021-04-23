@@ -12,9 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class AbstractPluginTester {
 
-	
 	private AbstractPlugin plugin;
-
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -28,6 +26,10 @@ class AbstractPluginTester {
 
 				this.addWorker(TestSpec.class, ()->{System.out.println("Spec worker");});
 				this.addWorker(null, ()->{System.out.println("global worker");});
+			}
+
+			@Override
+			public void teardown() {				
 			}
 			
 		};
@@ -63,7 +65,6 @@ class AbstractPluginTester {
 		Assertions.assertEquals(1, this.plugin.getWorkers(TestSpec.class).size());
 	}
 	
-
 	@Test
 	void getCommanderFromSpec() {
 		this.plugin.setup();
@@ -71,5 +72,4 @@ class AbstractPluginTester {
 		Assertions.assertNotNull(this.plugin.getCommander(spec));
 	}
 	
-
 }
