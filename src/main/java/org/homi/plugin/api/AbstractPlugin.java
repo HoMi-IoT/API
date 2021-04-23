@@ -107,7 +107,9 @@ public abstract class AbstractPlugin implements IPlugin{
 			this.workers.get(spec.getAnnotation(SpecificationID.class).id()).add(worker);
 		}
 	}
-	
+
 	public abstract void setup();
+	
+	public abstract void teardown();
 	
 }
