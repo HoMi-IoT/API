@@ -22,7 +22,7 @@ public class Commander<T extends Enum<T> & ISpecification> {
 	 * @param spec
 	 * @param mappings
 	 */
-	Commander(Class<T> spec,Map<?, IReceiver> mappings){
+	protected Commander(Class<T> spec,Map<?, IReceiver> mappings){
 		this.mappings = mappings;
 		this.spec = spec;
 	}
