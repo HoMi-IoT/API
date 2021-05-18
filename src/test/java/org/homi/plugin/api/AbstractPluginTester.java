@@ -24,8 +24,8 @@ class AbstractPluginTester {
 				var c = cb.onCommandEquals(TestSpec.RETURN_NULL, (Object ...args)->{return null;}).build();
 				this.addCommander(TestSpec.class, c);
 
-				this.addWorker(TestSpec.class, ()->{System.out.println("Spec worker");});
-				this.addWorker(null, ()->{System.out.println("global worker");});
+				this.addWorker(()->{System.out.println("Spec worker");});
+				this.addWorker(()->{System.out.println("global worker");});
 			}
 
 			@Override
@@ -36,11 +36,6 @@ class AbstractPluginTester {
 	}
 
 
-	@Test
-	void pluginVersionIsZero() {
-		Assertions.assertEquals(0, this.plugin.getAPIVersion()); 
-	}
-	
 	@Test
 	void setupPlugin() {
 		Assertions.assertDoesNotThrow(()->{ this.plugin.setup();});
@@ -56,20 +51,19 @@ class AbstractPluginTester {
 	@Test
 	void getGlobalWorkers() {
 		this.plugin.setup();
-		Assertions.assertEquals(1, this.plugin.getWorkers(null).size());
+		Assertions.assertEquals(1, this.plugin.getWorkers().size());
 	}
 
-	@Test
-	void getSpecificationWorkers() {
-		this.plugin.setup();
-		Assertions.assertEquals(1, this.plugin.getWorkers(TestSpec.class).size());
-	}
-	
 	@Test
 	void getCommanderFromSpec() {
 		this.plugin.setup();
 		Class<? extends ISpecification> spec = this.plugin.getSpecifications().get(0);
 		Assertions.assertNotNull(this.plugin.getCommander(spec));
+	}
+	@Test
+	void getCommanderFromSpecClone() {
+		this.plugin.setup();
+		Assertions.assertNotNull(this.plugin.getCommander(TestSpec2.class));
 	}
 	
 }

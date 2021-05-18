@@ -7,13 +7,6 @@ package org.homi.plugin.api;
  * @since 0.0.1
  */
 public interface IPlugin {
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public int getAPIVersion();
-	
 	/**
 	 * 
 	 * @return

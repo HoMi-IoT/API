@@ -2,6 +2,7 @@ package org.homi.plugin.api;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.Future;
 
@@ -46,6 +47,11 @@ class CommanderTest {
 			int x = (int) args[0];
 			return null;
 			});
+		mappings.put("SEND_CUSTOM", (Object ...args)->{
+			Custom x = (Custom) args[0];
+			System.out.println(x);
+			return null;
+			});
 		
 		this.commander = new Commander<TestSpec>(TestSpec.class, mappings);
 	}
@@ -63,21 +69,21 @@ class CommanderTest {
 	}
 	
 	@Test
-	void executeMustReturnValue() {
+	void executeMustReturnValue() throws TypeMismatchException, ClassCastException, IllegalArgumentException, ClassNotFoundException, IOException {
 		Object o = this.commander.execute(TestSpec.RETURN_NULL);
 	}
 
 	@Test
-	void executeReturnsNullWhenTypeIsVoid() {
+	void executeReturnsNullWhenTypeIsVoid() throws TypeMismatchException, ClassCastException, IllegalArgumentException, ClassNotFoundException, IOException {
 		Assertions.assertNull(this.commander.execute(TestSpec.RETURN_NULL));
 	}
 	
 	@Test
-	void executeReturnValueMustMatchSpecWhenNotNull() {
-		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_OBJECT).getClass(), TestSpec.RETURN_OBJECT.getReturnType());
-		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_STRING).getClass(), TestSpec.RETURN_STRING.getReturnType());
-		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_FLOAT).getClass(), TestSpec.RETURN_FLOAT.getReturnType());
-		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_INTEGER).getClass(), TestSpec.RETURN_INTEGER.getReturnType());
+	void executeReturnValueMustMatchSpecWhenNotNull() throws TypeMismatchException, ClassCastException, IllegalArgumentException, ClassNotFoundException, IOException {
+		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_OBJECT).getClass(), TestSpec.RETURN_OBJECT.getReturnType().getTypeClass());
+		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_STRING).getClass(), TestSpec.RETURN_STRING.getReturnType().getTypeClass());
+		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_FLOAT).getClass(), TestSpec.RETURN_FLOAT.getReturnType().getTypeClass());
+		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_INTEGER).getClass(), TestSpec.RETURN_INTEGER.getReturnType().getTypeClass());
 	}
 	
 	@Test
@@ -129,6 +135,13 @@ class CommanderTest {
 				Future<Float> i = this.commander.executeAsync(TestSpec.RETURN_INTEGER);
 				Float f = i.get();
 			});
-		Assertions.assertThrows(TypeMismatchException.class, ()->{(this.commander.executeAsync(TestSpec.SEND_INTEGER, "hey Omri")).get();});
+		Assertions.assertThrows(Exception.class, ()->{(this.commander.executeAsync(TestSpec.SEND_INTEGER, "hey Omri")).get();});
+	}
+	
+	
+	@Test
+	void sendSirializable() {
+		Assertions.assertDoesNotThrow(()->{this.commander.execute(TestSpec.SEND_CUSTOM, new Custom("Omri", 15) );});
+		Assertions.assertThrows(Exception.class, ()->{this.commander.execute(TestSpec.SEND_CUSTOM, new String("Omri") );});
 	}
 }

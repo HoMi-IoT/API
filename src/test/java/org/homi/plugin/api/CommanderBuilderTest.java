@@ -2,6 +2,8 @@ package org.homi.plugin.api;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +40,7 @@ class CommanderBuilderTest {
 	}
 	
 	@Test
-	void useCommandsOnBuiltCommander() {
+	void useCommandsOnBuiltCommander() throws TypeMismatchException, ClassCastException, IllegalArgumentException, ClassNotFoundException, IOException {
 		Commander<TestSpec> c = commanderBuilder.onCommandEquals(TestSpec.RETURN_NULL, (Object ...args)->{return null;})
 				.onCommandEquals(TestSpec.RETURN_INTEGER, (Object ...args)->{return 1;})
 				.build();
