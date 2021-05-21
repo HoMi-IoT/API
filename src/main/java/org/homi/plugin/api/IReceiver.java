@@ -1,16 +1,8 @@
 package org.homi.plugin.api;
 
-/**
- * 
- * @author Nicolas Hanout
- *
- * @param <T>
- */
+import org.homi.plugin.api.exceptions.InternalPluginException;
+
 public interface IReceiver<T> {
-	/**
-	 * 
-	 * @param args
-	 * @return
-	 */
-	T doAction(Object ...args);
+
+	T doAction(Object ...args) throws InternalPluginException;
 }

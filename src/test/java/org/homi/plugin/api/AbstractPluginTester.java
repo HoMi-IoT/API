@@ -1,22 +1,18 @@
 package org.homi.plugin.api;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.homi.plugin.api.basicplugin.AbstractBasicPlugin;
 import org.homi.plugin.specification.ISpecification;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class AbstractPluginTester {
 
-	private AbstractPlugin plugin;
+	private AbstractBasicPlugin plugin;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		this.plugin = new AbstractPlugin() {
+		this.plugin = new AbstractBasicPlugin() {
 
 			@Override
 			public void setup() {			
@@ -25,7 +21,6 @@ class AbstractPluginTester {
 				this.addCommander(TestSpec.class, c);
 
 				this.addWorker(()->{System.out.println("Spec worker");});
-				this.addWorker(()->{System.out.println("global worker");});
 			}
 
 			@Override

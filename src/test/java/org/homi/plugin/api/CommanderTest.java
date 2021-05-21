@@ -2,11 +2,13 @@ package org.homi.plugin.api;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.Future;
 
-import org.homi.plugin.specification.ISpecification;
+import org.homi.plugin.api.exceptions.InternalPluginException;
+import org.homi.plugin.specification.exceptions.ArgumentLengthException;
+import org.homi.plugin.specification.exceptions.InvalidArgumentException;
+import org.homi.plugin.specification.exceptions.SpecificationViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,17 +71,17 @@ class CommanderTest {
 	}
 	
 	@Test
-	void executeMustReturnValue() throws TypeMismatchException, ClassCastException, IllegalArgumentException, ClassNotFoundException, IOException {
+	void executeMustReturnValue() throws InvalidArgumentException, ArgumentLengthException, InternalPluginException {
 		Object o = this.commander.execute(TestSpec.RETURN_NULL);
 	}
 
 	@Test
-	void executeReturnsNullWhenTypeIsVoid() throws TypeMismatchException, ClassCastException, IllegalArgumentException, ClassNotFoundException, IOException {
+	void executeReturnsNullWhenTypeIsVoid() throws InvalidArgumentException, ArgumentLengthException, InternalPluginException  {
 		Assertions.assertNull(this.commander.execute(TestSpec.RETURN_NULL));
 	}
 	
 	@Test
-	void executeReturnValueMustMatchSpecWhenNotNull() throws TypeMismatchException, ClassCastException, IllegalArgumentException, ClassNotFoundException, IOException {
+	void executeReturnValueMustMatchSpecWhenNotNull() throws InvalidArgumentException, ArgumentLengthException, InternalPluginException {
 		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_OBJECT).getClass(), TestSpec.RETURN_OBJECT.getReturnType().getTypeClass());
 		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_STRING).getClass(), TestSpec.RETURN_STRING.getReturnType().getTypeClass());
 		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_FLOAT).getClass(), TestSpec.RETURN_FLOAT.getReturnType().getTypeClass());
@@ -117,15 +119,15 @@ class CommanderTest {
 	@Test
 	void executeValidatesParameterCount() {
 		Assertions.assertDoesNotThrow(()->{this.commander.execute(TestSpec.SEND_STRING, "Hey Omri");});
-		Assertions.assertThrows(RuntimeException.class, ()->{this.commander.execute(TestSpec.SEND_STRING, "Hey Omri",  "bye Omri");});
-		Assertions.assertThrows(RuntimeException.class, ()->{this.commander.execute(TestSpec.SEND_STRING);});
+		Assertions.assertThrows(SpecificationViolationException.class, ()->{this.commander.execute(TestSpec.SEND_STRING, "Hey Omri",  "bye Omri");});
+		Assertions.assertThrows(SpecificationViolationException.class, ()->{this.commander.execute(TestSpec.SEND_STRING);});
 	}
 	
 	@Test
 	void executeValidatesParameterTypes() {
 		Assertions.assertDoesNotThrow(()->{this.commander.execute(TestSpec.SEND_INTEGER, 15);});
-		Assertions.assertThrows(TypeMismatchException.class, ()->{this.commander.execute(TestSpec.SEND_INTEGER, "hey Omri");});
-		Assertions.assertThrows(TypeMismatchException.class, ()->{this.commander.execute(TestSpec.SEND_INTEGER, new Object());});
+		Assertions.assertThrows(SpecificationViolationException.class, ()->{this.commander.execute(TestSpec.SEND_INTEGER, "hey Omri");});
+		Assertions.assertThrows(SpecificationViolationException.class, ()->{this.commander.execute(TestSpec.SEND_INTEGER, new Object());});
 	}
 	
 	@Test

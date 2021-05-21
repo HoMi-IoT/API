@@ -1,4 +1,4 @@
-package org.homi.plugin.api;
+package org.homi.plugin.api.basicplugin;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,15 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.homi.plugin.api.Commander;
+import org.homi.plugin.api.IPlugin;
+import org.homi.plugin.api.IPluginProvider;
 import org.homi.plugin.specification.ISpecification;
 import org.homi.plugin.specification.SpecificationID;
 
-/**
- * 
- * @author Nicolas Hanout
- * @since 0.0.1
- */
-public abstract class AbstractPlugin implements IPlugin{
+public abstract class AbstractBasicPlugin implements IBasicPlugin{
 	private List<Class<? extends ISpecification>>  specifications = new ArrayList<>();
 	private Map<String, Commander<? extends ISpecification>> commanders = new HashMap<>();
 	private List<Runnable> workers = new ArrayList<>();
@@ -31,10 +29,6 @@ public abstract class AbstractPlugin implements IPlugin{
 	final public List<Class<? extends ISpecification>> getSpecifications(){
 		return Collections.unmodifiableList(this.specifications);
 	};
-	
-	final public Class<AbstractPlugin> getKind(){
-		return AbstractPlugin.class;
-	}
 	
 	final public void setPluginProvider(IPluginProvider pluginProvider) {
 		this.pluginProvider = pluginProvider;

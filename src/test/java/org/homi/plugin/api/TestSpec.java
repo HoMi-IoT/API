@@ -1,41 +1,53 @@
 package org.homi.plugin.api;
 
+import java.util.ArrayList;
+
 import org.homi.plugin.specification.ISpecification;
-import org.homi.plugin.specification.ParameterType;
+import org.homi.plugin.specification.SpecificationHelper;
 import org.homi.plugin.specification.SpecificationID;
+import org.homi.plugin.specification.TypeDef;
 
 @SpecificationID(id = "TestSpec")
 public enum TestSpec implements ISpecification{
 
-	RETURN_NULL(new ParameterType<>(Void.class)),
-	RETURN_STRING(new ParameterType<>(String.class)),
-	RETURN_INTEGER(new ParameterType<>(Integer.class)),
-	RETURN_FLOAT(new ParameterType<>(Float.class)),
-	RETURN_OBJECT(new ParameterType<>(Object.class)),
-
-	RETURN_WRONG_TYPE(new ParameterType<>(Float.class)),
+	RETURN_NULL(Void.class),
+	RETURN_STRING(String.class),
+	RETURN_INTEGER(Integer.class),
+	RETURN_FLOAT(Float.class),
+	RETURN_OBJECT(Object.class),
+	RETURN_WRONG_TYPE(Float.class),
+	SEND_STRING(String.class,String.class),
+	SEND_INTEGER(Void.class, Integer.class),
+	SEND_CUSTOM(Void.class, Custom.class);
 	
 
-	SEND_STRING(new ParameterType<>(String.class), new ParameterType<>(String.class)),
-	SEND_INTEGER(new ParameterType<>(Void.class), new ParameterType<>(Integer.class)),
-	SEND_CUSTOM(new ParameterType<>(Void.class), new ParameterType<>(Custom.class));
-	
 
-	private ParameterType<?>[] parameterTypes;
-	private ParameterType<?> returnType;
-	TestSpec(ParameterType<?> returnType, ParameterType<?> ...parameterTypes ) {
-		this.parameterTypes = parameterTypes;
-		this.returnType = returnType;
+
+	private TypeDef<?>[] parameterTypes;
+	private TypeDef<?> returnType;
+	TestSpec(Object returnType, Object...parameterTypes ) {
+		try {
+			this.returnType = SpecificationHelper.processType(returnType);
+			this.parameterTypes = new TypeDef<?>[parameterTypes.length];
+			
+			for(int i =0; i<parameterTypes.length; i++) {
+				this.parameterTypes[i] = SpecificationHelper.processType(parameterTypes[i]);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public ParameterType<?>[] getParameterTypes() {
+	public TypeDef<?>[] getParameterTypes() {
 		return this.parameterTypes;
 	}
 	
 	@Override
-	public ParameterType<?> getReturnType() {
+	public TypeDef<?> getReturnType() {
 		return this.returnType;
 	}
+	
 	
 }
