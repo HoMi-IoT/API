@@ -25,11 +25,9 @@ class AbstractPluginTester {
 
 			@Override
 			public void teardown() {				
-			}
-			
+			}		
 		};
 	}
-
 
 	@Test
 	void setupPlugin() {

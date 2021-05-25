@@ -1,7 +1,5 @@
 package org.homi.plugin.api;
 
-import java.util.ArrayList;
-
 import org.homi.plugin.specification.ISpecification;
 import org.homi.plugin.specification.SpecificationHelper;
 import org.homi.plugin.specification.SpecificationID;
@@ -34,7 +32,6 @@ public enum TestSpec implements ISpecification{
 				this.parameterTypes[i] = SpecificationHelper.processType(parameterTypes[i]);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

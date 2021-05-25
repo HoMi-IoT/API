@@ -1,7 +1,5 @@
 package org.homi.plugin.api;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.HashMap;
 import java.util.concurrent.Future;
 
@@ -19,7 +17,7 @@ class CommanderTest {
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		var mappings = new HashMap<String, IReceiver>();
+		var mappings = new HashMap<String, IReceiver<?>>();
 		
 		mappings.put("RETURN_NULL", (Object ...args)->{
 			return null;

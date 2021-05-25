@@ -1,6 +1,8 @@
 package org.homi.plugin.api.exceptions;
 
-public class PluginUnavailableException extends Exception {
+public class PluginUnavailableException extends PluginException {
+
+	private static final long serialVersionUID = 3947705766773328215L;
 
 	public PluginUnavailableException() {
 		// TODO Auto-generated constructor stub

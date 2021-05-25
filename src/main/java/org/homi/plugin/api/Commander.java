@@ -1,6 +1,5 @@
 package org.homi.plugin.api;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.Future;
 
@@ -12,11 +11,11 @@ import org.homi.plugin.specification.exceptions.ArgumentLengthException;
 import org.homi.plugin.specification.exceptions.InvalidArgumentException;
 
 public class Commander<T extends Enum<T> & ISpecification> {
-	private Map<?, IReceiver> mappings;
+	private Map<?, IReceiver<?>> mappings;
 	private Class<T> spec;
 
-	protected Commander(Class<T> spec,Map<?, IReceiver> mappings){
-		this.mappings = mappings;
+	protected Commander(Class<T> spec,Map<String, IReceiver<?>> mappings2){
+		this.mappings = mappings2;
 		this.spec = spec;
 	}
 
@@ -31,7 +30,11 @@ public class Commander<T extends Enum<T> & ISpecification> {
 	public <C extends Enum<?> & ISpecification,R> Future<R> executeAsync(C command, Object ...args) {
 		return (Future<R>) ExecutorServiceManager.getExecutorService()
 				.submit(() ->{
-					return execute(command, args);
+					try {
+						return execute(command, args);
+					} catch(Exception e) {
+						throw new RuntimeException(e);
+					}
 					});
 	}
 
