@@ -15,9 +15,6 @@ public enum TestSpec2 implements ISpecification{
 	RETURN_NULL(Void.class),
 	RETURN_FLOAT(Custom.class),
 	C1(Void.class);
-	
-
-
 
 	private List<TypeDef<?>> parameterTypes;
 	private TypeDef<?> returnType;

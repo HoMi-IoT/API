@@ -1,7 +1,9 @@
 package org.homi.plugin.api;
 
 import org.homi.plugin.specification.ISpecification;
-import  static org.homi.plugin.specification.Constraints.*;
+import static org.homi.plugin.specification.Constraints.*;
+import static org.homi.plugin.specification.SpecificationHelper.defineType;
+import static org.homi.plugin.specification.SpecificationHelper.defineSerializableType;
 
 import java.util.List;
 
@@ -19,8 +21,8 @@ public enum TestSpec implements ISpecification{
 	RETURN_OBJECT(Object.class),
 	RETURN_WRONG_TYPE(Float.class),
 	SEND_STRING(String.class, String.class),
-	SEND_CONSTRAINED_STRING(String.class, new TypeDef<>(String.class, notNull(), contains("18"))),
-	SEND_CONSTRAINED_Integer(Integer.class, new TypeDef<>(Integer.class, notNull(), isEqualTo(14))),
+	SEND_CONSTRAINED_STRING(String.class, defineType(String.class, notNull(), contains("18"))),
+	SEND_CONSTRAINED_Integer(Integer.class, defineType(Integer.class, notNull(), isEqualTo(14))),
 	SEND_INTEGER(Void.class, Integer.class),
 	SEND_CUSTOM(Void.class, Custom.class);
 	
@@ -34,7 +36,7 @@ public enum TestSpec implements ISpecification{
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public List<TypeDef<?>> getParameterTypes() {
 		return this.parameterTypes;
