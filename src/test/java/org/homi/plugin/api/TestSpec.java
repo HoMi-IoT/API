@@ -24,7 +24,7 @@ public enum TestSpec implements ISpecification{
 	SEND_CONSTRAINED_STRING(String.class, defineType(String.class, notNull(), contains("18"))),
 	SEND_CONSTRAINED_Integer(Integer.class, defineType(Integer.class, notNull(), isEqualTo(14))),
 	SEND_INTEGER(Void.class, Integer.class),
-	SEND_CUSTOM(Void.class, Custom.class);
+	SEND_CUSTOM(Void.class, defineSerializableType(Custom.class));
 	
 	private List<TypeDef<?>> parameterTypes;
 	private TypeDef<?> returnType;
