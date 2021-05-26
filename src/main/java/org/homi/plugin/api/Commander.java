@@ -15,37 +15,39 @@ public class Commander<T extends Enum<T> & ISpecification> {
 	private Map<?, IReceiver<?>> mappings;
 	private Class<T> spec;
 
-	protected Commander(Class<T> spec,Map<String, IReceiver<?>> mappings2){
+	protected Commander(Class<T> spec, Map<String, IReceiver<?>> mappings2) {
 		this.mappings = mappings2;
 		this.spec = spec;
 	}
 
-	public <C extends Enum<?> & ISpecification, R> R execute(C command, Object ...args) throws InvalidArgumentException, ArgumentLengthException, InternalPluginException {
+	public <C extends Enum<?> & ISpecification, R> R execute(C command, Object... args)
+			throws InvalidArgumentException, ArgumentLengthException, InternalPluginException {
 		T c = Enum.valueOf(spec, command.name());
-		
+
 		args = Commander.validateParameterTypes(c.getParameterTypes(), args);
-		
+
 		return (R) c.getReturnType().process(this.mappings.get(c.name()).doAction(args));
 	}
 
-	public <C extends Enum<?> & ISpecification,R> Future<R> executeAsync(C command, Object ...args) {
-		return (Future<R>) ExecutorServiceManager.getExecutorService()
-				.submit(() ->{
-					try {
-						return execute(command, args);
-					} catch(Exception e) {
-						throw new RuntimeException(e);
-					}
-					});
+	public <C extends Enum<?> & ISpecification, R> Future<R> executeAsync(C command, Object... args) {
+		return (Future<R>) ExecutorServiceManager.getExecutorService().submit(() -> {
+			try {
+				return execute(command, args);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		});
 	}
 
-	private static Object[] validateParameterTypes(List<TypeDef<?>> parameterTypes, Object[] args) throws ArgumentLengthException, InvalidArgumentException {
-		if(parameterTypes.size() != args.length)
-			throw new ArgumentLengthException("Expected "+parameterTypes.size()+" arguments, but received "+args.length);
+	private static Object[] validateParameterTypes(List<TypeDef<?>> parameterTypes, Object[] args)
+			throws ArgumentLengthException, InvalidArgumentException {
+		if (parameterTypes.size() != args.length)
+			throw new ArgumentLengthException(
+					"Expected " + parameterTypes.size() + " arguments, but received " + args.length);
 		Object[] processedArgs = new Object[args.length];
-		for(int i=0; i<args.length; i++)
+		for (int i = 0; i < args.length; i++)
 			processedArgs[i] = parameterTypes.get(i).process(args[i]);
-		
+
 		return processedArgs;
 	}
 
