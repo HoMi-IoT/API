@@ -1,4 +1,4 @@
-package org.homi.plugin.api;
+package org.homi.plugin.api.commander;
 
 import java.util.List;
 import java.util.Map;
@@ -15,8 +15,8 @@ public class Commander<T extends Enum<T> & ISpecification> {
 	private Map<?, IReceiver<?>> mappings;
 	private Class<T> spec;
 
-	protected Commander(Class<T> spec, Map<String, IReceiver<?>> mappings2) {
-		this.mappings = mappings2;
+	protected Commander(Class<T> spec, Map<String, IReceiver<?>> mappings) {
+		this.mappings = mappings;
 		this.spec = spec;
 	}
 

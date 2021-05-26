@@ -1,4 +1,4 @@
-package org.homi.plugin.api;
+package org.homi.plugin.api.commander;
 
 import java.util.HashMap;
 import java.util.Map;

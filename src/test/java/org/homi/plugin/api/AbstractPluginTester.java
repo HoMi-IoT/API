@@ -1,6 +1,7 @@
 package org.homi.plugin.api;
 
 import org.homi.plugin.api.basicplugin.AbstractBasicPlugin;
+import org.homi.plugin.api.commander.CommanderBuilder;
 import org.homi.plugin.specification.ISpecification;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

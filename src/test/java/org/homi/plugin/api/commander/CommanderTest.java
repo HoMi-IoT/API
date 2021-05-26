@@ -1,8 +1,13 @@
-package org.homi.plugin.api;
+package org.homi.plugin.api.commander;
 
 import java.util.HashMap;
 import java.util.concurrent.Future;
 
+import org.homi.plugin.api.Custom;
+import org.homi.plugin.api.TestSpec;
+import org.homi.plugin.api.TestSpec2;
+import org.homi.plugin.api.commander.Commander;
+import org.homi.plugin.api.commander.IReceiver;
 import org.homi.plugin.api.exceptions.InternalPluginException;
 import org.homi.plugin.specification.exceptions.ArgumentLengthException;
 import org.homi.plugin.specification.exceptions.InvalidArgumentException;

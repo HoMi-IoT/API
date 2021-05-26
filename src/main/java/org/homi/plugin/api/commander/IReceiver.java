@@ -1,4 +1,4 @@
-package org.homi.plugin.api;
+package org.homi.plugin.api.commander;
 
 import org.homi.plugin.api.exceptions.InternalPluginException;
 

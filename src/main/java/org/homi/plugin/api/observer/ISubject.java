@@ -1,4 +1,4 @@
-package org.homi.plugin.api;
+package org.homi.plugin.api.observer;
 
 public interface ISubject {
 	

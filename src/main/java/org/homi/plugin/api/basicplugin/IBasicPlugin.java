@@ -2,7 +2,7 @@ package org.homi.plugin.api.basicplugin;
 
 import java.util.List;
 
-import org.homi.plugin.api.Commander;
+import org.homi.plugin.api.commander.Commander;
 import org.homi.plugin.api.IPlugin;
 import org.homi.plugin.api.exceptions.PluginException;
 import org.homi.plugin.specification.ISpecification;
