@@ -1,6 +1,10 @@
 package org.homi.plugin.api;
 
 import org.homi.plugin.specification.ISpecification;
+import  static org.homi.plugin.specification.Constraints.*;
+
+import java.util.List;
+
 import org.homi.plugin.specification.SpecificationHelper;
 import org.homi.plugin.specification.SpecificationID;
 import org.homi.plugin.specification.TypeDef;
@@ -14,30 +18,25 @@ public enum TestSpec implements ISpecification{
 	RETURN_FLOAT(Float.class),
 	RETURN_OBJECT(Object.class),
 	RETURN_WRONG_TYPE(Float.class),
-	SEND_STRING(String.class,String.class),
+	SEND_STRING(String.class, String.class),
+	SEND_CONSTRAINED_STRING(String.class, new TypeDef<>(String.class, notNull(), contains("18"))),
+	SEND_CONSTRAINED_Integer(Integer.class, new TypeDef<>(Integer.class, notNull(), isEqualTo(14))),
 	SEND_INTEGER(Void.class, Integer.class),
 	SEND_CUSTOM(Void.class, Custom.class);
 	
-
-
-
-	private TypeDef<?>[] parameterTypes;
+	private List<TypeDef<?>> parameterTypes;
 	private TypeDef<?> returnType;
 	TestSpec(Object returnType, Object...parameterTypes ) {
 		try {
 			this.returnType = SpecificationHelper.processType(returnType);
-			this.parameterTypes = new TypeDef<?>[parameterTypes.length];
-			
-			for(int i =0; i<parameterTypes.length; i++) {
-				this.parameterTypes[i] = SpecificationHelper.processType(parameterTypes[i]);
-			}
+			this.parameterTypes = SpecificationHelper.processTypes(parameterTypes);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public TypeDef<?>[] getParameterTypes() {
+	public List<TypeDef<?>> getParameterTypes() {
 		return this.parameterTypes;
 	}
 	
@@ -45,6 +44,5 @@ public enum TestSpec implements ISpecification{
 	public TypeDef<?> getReturnType() {
 		return this.returnType;
 	}
-	
 	
 }

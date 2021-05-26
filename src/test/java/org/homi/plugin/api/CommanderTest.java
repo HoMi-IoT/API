@@ -80,10 +80,10 @@ class CommanderTest {
 	
 	@Test
 	void executeReturnValueMustMatchSpecWhenNotNull() throws InvalidArgumentException, ArgumentLengthException, InternalPluginException {
-		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_OBJECT).getClass(), TestSpec.RETURN_OBJECT.getReturnType().getTypeClass());
-		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_STRING).getClass(), TestSpec.RETURN_STRING.getReturnType().getTypeClass());
-		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_FLOAT).getClass(), TestSpec.RETURN_FLOAT.getReturnType().getTypeClass());
-		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_INTEGER).getClass(), TestSpec.RETURN_INTEGER.getReturnType().getTypeClass());
+		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_OBJECT).getClass(), TestSpec.RETURN_OBJECT.getReturnType().getType());
+		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_STRING).getClass(), TestSpec.RETURN_STRING.getReturnType().getType());
+		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_FLOAT).getClass(), TestSpec.RETURN_FLOAT.getReturnType().getType());
+		Assertions.assertEquals(this.commander.execute(TestSpec.RETURN_INTEGER).getClass(), TestSpec.RETURN_INTEGER.getReturnType().getType());
 	}
 	
 	@Test

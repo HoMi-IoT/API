@@ -1,5 +1,6 @@
 package org.homi.plugin.api;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 
@@ -38,12 +39,12 @@ public class Commander<T extends Enum<T> & ISpecification> {
 					});
 	}
 
-	private static Object[] validateParameterTypes(TypeDef<?>[] parameterTypes, Object[] args) throws ArgumentLengthException, InvalidArgumentException {
-		if(parameterTypes.length != args.length)
-			throw new ArgumentLengthException("Expected "+parameterTypes.length+" arguments, but received "+args.length);
+	private static Object[] validateParameterTypes(List<TypeDef<?>> parameterTypes, Object[] args) throws ArgumentLengthException, InvalidArgumentException {
+		if(parameterTypes.size() != args.length)
+			throw new ArgumentLengthException("Expected "+parameterTypes.size()+" arguments, but received "+args.length);
 		Object[] processedArgs = new Object[args.length];
 		for(int i=0; i<args.length; i++)
-			processedArgs[i] = parameterTypes[i].process(args[i]);
+			processedArgs[i] = parameterTypes.get(i).process(args[i]);
 		
 		return processedArgs;
 	}
