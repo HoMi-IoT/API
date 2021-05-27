@@ -22,7 +22,12 @@ public enum TestSpec implements ISpecification{
 	RETURN_WRONG_TYPE(Float.class),
 	SEND_STRING(String.class, String.class),
 	SEND_CONSTRAINED_STRING(String.class, defineType(String.class, notNull(), contains("18"))),
-	SEND_CONSTRAINED_Integer(Integer.class, defineType(Integer.class, notNull(), isEqualTo(14))),
+	SEND_CONSTRAINED_Integer(Integer.class, 
+			defineType(
+				Integer.class, 
+				notNull(), 
+				or(isEqualTo(14), isOneOf(List.of(1,2,3,4)))
+				)),
 	SEND_INTEGER(Void.class, Integer.class),
 	SEND_CUSTOM(Void.class, defineSerializableType(Custom.class));
 	
