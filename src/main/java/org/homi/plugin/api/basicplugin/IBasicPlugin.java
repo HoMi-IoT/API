@@ -11,6 +11,6 @@ public interface IBasicPlugin extends IPlugin{
 	
 	abstract public <T extends Enum<T> & ISpecification> Commander<T> getCommander(Class<? extends ISpecification> spec) throws PluginException;
 	abstract public List<Runnable> getWorkers() throws PluginException;
-	abstract public List<Class<? extends ISpecification>> getSpecifications() throws PluginException;
+	abstract public <T extends Enum<T> & ISpecification> List<Class<T>> getSpecifications() throws PluginException;
 	
 }
