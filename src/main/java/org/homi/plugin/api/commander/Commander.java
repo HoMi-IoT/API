@@ -23,7 +23,6 @@ public class Commander<T extends Enum<T> & ISpecification> {
 
 	public <C extends Enum<?> & ISpecification, R> R execute(C command, Object... args)
 			throws InvalidArgumentException, ArgumentLengthException, InternalPluginException {
-		var x = command.getClass().getClassLoader();
 		T c = Enum.valueOf(spec, command.name());
 
 		args = Commander.validateParameterTypes(c.getParameterTypes(), args);
