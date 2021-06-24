@@ -27,12 +27,12 @@ public class Commander<T extends Enum<T> & ISpecification> {
 		if (args == null) {
 			args = new Object[0];
 		}
+		System.out.println("c" + c);
+		System.out.println("c.getReturnType" + c.getReturnType());
 		
 		args = Commander.validateParameterTypes(c.getParameterTypes(), args);
 		var returnType = this.mappings.get(c.name()).doAction(args);
 		System.out.println("returnType:" + returnType);
-		System.out.println("c" + c);
-		System.out.println("c.getReturnType" + c.getReturnType());
 		return (R) c.getReturnType().process(returnType, command.getClass().getClassLoader());
 	}
 
