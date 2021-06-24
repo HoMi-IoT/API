@@ -24,7 +24,10 @@ public class Commander<T extends Enum<T> & ISpecification> {
 	public <C extends Enum<?> & ISpecification, R> R execute(C command, Object... args)
 			throws InvalidArgumentException, ArgumentLengthException, InternalPluginException {
 		T c = Enum.valueOf(spec, command.name());
-
+		if (args == null) {
+			args = new Object[0];
+		}
+		
 		args = Commander.validateParameterTypes(c.getParameterTypes(), args);
 		var returnType = this.mappings.get(c.name()).doAction(args);
 		System.out.println("returnType:" + returnType);
